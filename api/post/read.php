@@ -14,7 +14,7 @@ $db = $database->connect();
 $post = new Post($db);
 
 // Blog post query
-$postResult = $post->read();
+$postResult = $post->read_all();
 // Get row count
 $num = $postResult->rowCount();
 
@@ -31,7 +31,7 @@ if ($num > 0) {
       $post_item = array(
          'id' => $id,
          'title' => $title,
-         'body' => html_entity_decode($body), // in case the post in the blog contains html snippets
+         'body' => html_entity_decode($body), // add html_entity_decode() in case the post in the blog contains html snippets
          'author' => $author,
          'category_id' => $category_id,
          'category_name' => $category_name

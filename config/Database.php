@@ -2,8 +2,8 @@
 class Database {
    // DB Params
    private $host = 'localhost';
-   private $db_name = 'testblog';
-   private $username = 'root';
+   private $db_name = 'testblogdb';
+   private $username = 'user';
    private $password = '';
    private $conn;
 

@@ -1,10 +1,10 @@
 <?php
 class Post {
-   // DB stuff
+   // database connection details
    private $conn;
    private $table = 'posts';
 
-   // Post Properties
+   // post properties
    public $id;
    public $category_id;
    public $category_name;
@@ -18,9 +18,9 @@ class Post {
       $this->conn = $db;
    }
 
-   // Get Posts
+   // get Posts
    public function read_all() {
-      // Create query
+      // create query
       $query = 'SELECT c.name as category_name, p.id, 
          p.category_id, 
          p.title, 
@@ -33,10 +33,10 @@ class Post {
          ORDER BY
          p.created_at DESC';
 
-      // Prepare statement
+      // prepare statement
       $stmt = $this->conn->prepare($query);
 
-      // Execute query
+      // execute query
       $stmt->execute();
 
       return $stmt;
@@ -54,13 +54,13 @@ class Post {
          LEFT JOIN
          categories c ON p.category_id = c.id
          WHERE
-         p.id = ?
+         p.id = :id
          LIMIT 0, 1';
 
       $stmt = $this->conn->prepare($query);
 
-      // bind id
-      $stmt->bindParam(1, $this->id);
+      // bind id --- using PDO named paramter (may also use positional parameter)
+      $stmt->bindParam(':id', $this->id);
 
       $stmt->execute();
 
@@ -72,5 +72,41 @@ class Post {
       $this->author = $row['author'];
       $this->category_id = $row['category_id'];
       $this->category_name = $row['category_name'];
+   }
+
+   // create post
+   public function create() {
+      // create query
+      $query = 'INSERT INTO ' .
+         $this->table . ' 
+      SET title = :title, 
+      body = :body, 
+      author = :author, 
+      category_id = :category_id
+      ';
+
+      $stmt = $this->conn->prepare($query);
+
+      // sanitize data
+      $this->title = htmlspecialchars(strip_tags($this->title));
+      $this->body = htmlspecialchars(strip_tags($this->body));
+      $this->author = htmlspecialchars(strip_tags($this->author));
+      $this->category_id = htmlspecialchars(strip_tags($this->category_id));
+
+      // bind data
+      $stmt->bindParam(':title', $this->title);
+      $stmt->bindParam(':body', $this->body);
+      $stmt->bindParam(':author', $this->author);
+      $stmt->bindParam(':category_id', $this->category_id);
+
+      // execute query
+      if ($stmt->execute()) {
+         return true;
+      }
+
+      // print error if something goes wrong
+      printf("Error: %s.\n", $stmt->error);
+
+      return false;
    }
 }

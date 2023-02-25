@@ -22,7 +22,6 @@ $num = $postResult->rowCount();
 if ($num > 0) {
    // Post array
    $posts_arr = array();
-   $posts_arr['data'] = array();
 
    while ($row = $postResult->fetch(PDO::FETCH_ASSOC)) {
       // using extract() to use $title directly instead of $row['title'], $row['id'], etc. (sort of like desctructuring)
@@ -38,7 +37,7 @@ if ($num > 0) {
       );
 
       // Push to 'data' array inside $posts_arr
-      array_push($posts_arr['data'], $post_item);
+      array_push($posts_arr, $post_item);
    }
 
    // convert php array to JSON & output

@@ -1,0 +1,10 @@
+# misc
+.DS_Store
+*.pem
+.vscode
+.prettierrc
+
+# local assets
+/lcoal-assets
+
+

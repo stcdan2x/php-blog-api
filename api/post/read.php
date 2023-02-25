@@ -40,7 +40,7 @@ if ($num > 0) {
       array_push($posts_arr, $post_item);
    }
 
-   // convert php array to JSON & output
+   // convert php array to JSON and output
    echo json_encode($posts_arr);
 } else {
    // No existing Posts

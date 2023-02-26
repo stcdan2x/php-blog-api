@@ -1,6 +1,6 @@
 <?php
 class Post {
-   // database connection details
+   // table selection
    private $conn;
    private $table = 'posts';
 

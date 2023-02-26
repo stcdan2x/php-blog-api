@@ -6,24 +6,26 @@ header('Content-Type: application/json');
 include_once '../../config/Database.php';
 include_once '../../models/Post.php';
 
-// Instantiate DB & connect
+// instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
 
-// Instantiate blog post object
+// instantiate blog post object
 $post = new Post($db);
 
-// Blog post query
+// blog post query
 $postResult = $post->read_all();
-// Get row count
-$num = $postResult->rowCount();
+// get row count
+$count = $postResult->rowCount();
 
-// Check if any posts
-if ($num > 0) {
-   // Post array
+// check if any posts
+if ($count > 0) {
+   // post array
    $posts_arr = array();
 
-   while ($row = $postResult->fetch(PDO::FETCH_ASSOC)) {
+   $row = $catResult->fetch(PDO::FETCH_ASSOC);
+
+   while ($row) {
       // using extract() to use $title directly instead of $row['title'], $row['id'], etc. (sort of like desctructuring)
       extract($row);
 
@@ -36,14 +38,14 @@ if ($num > 0) {
          'category_name' => $category_name
       );
 
-      // Push to 'data' array inside $posts_arr
+      // push to $posts_arr
       array_push($posts_arr, $post_item);
    }
 
    // convert php array to JSON and output
    echo json_encode($posts_arr);
 } else {
-   // No existing Posts
+   // no existing Posts
    echo json_encode(
       array('message' => 'No Posts Found')
    );

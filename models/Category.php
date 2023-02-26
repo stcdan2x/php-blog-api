@@ -43,14 +43,14 @@ class Category {
           name
         FROM
           ' . $this->table . '
-        WHERE id = ?
+        WHERE id = :id
         LIMIT 0,1';
 
     // prepare statement
     $stmt = $this->conn->prepare($query);
 
     // bind ID
-    $stmt->bindParam(1, $this->id);
+    $stmt->bindParam(':id', $this->id);
 
     // execute query
     $stmt->execute();

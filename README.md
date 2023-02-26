@@ -1,6 +1,6 @@
 ## Vanilla PHP REST API for blog sites
 
-Basic pattern for a PHP REST API without using any framework, to be used for blog-type sites.
+Basic pattern for a REST API built with PHP without using any framework, to be used for blog-type sites.
 
 This is accessible through any front end app or REST client.
 
